@@ -1,0 +1,28 @@
+{
+	"name": "pixl-json-util",
+	"version": "1.0.0",
+	"description": "A simple CLI utility for manipulating JSON files.",
+	"author": "Joseph Huckaby <jhuckaby@gmail.com>",
+	"homepage": "https://github.com/jhuckaby/pixl-json-util",
+	"license": "MIT",
+	"main": "json-util.js",
+	"bin": {
+		"jsu": "json-util.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jhuckaby/pixl-json-util"
+	},
+	"bugs": {
+		"url": "https://github.com/jhuckaby/pixl-json-util/issues"
+	},
+	"keywords": [
+		"json",
+		"utilities"
+	],
+	"dependencies": {
+		"pixl-cli": "^1.0.0"
+	},
+	"devDependencies": {},
+	"scripts": {}
+}
