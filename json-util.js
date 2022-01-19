@@ -10,12 +10,14 @@
 //		--quiet         (Don't print anything to STDOUT)
 //		--dryrun        (Print JSON to STDOUT, instead of file)
 //
-// Copyright (c) 2018 Joseph Huckaby and PixlCore.com, MIT License
+// Copyright (c) 2018 - 2022 Joseph Huckaby and PixlCore.com, MIT License
 
 var fs = require('fs');
 var cli = require('pixl-cli');
 var args = cli.args;
 cli.global();
+
+var Tools = cli.Tools;
 
 if (args.help) {
 	print( fs.readFileSync( __dirname + '/README.md', 'utf8' ) );
@@ -33,7 +35,15 @@ var cmd = other.shift() || 'echo';
 if (!cmd || !cmd.match(/^(set|add|replace|delete|get|validate|echo)$/)) die(usage);
 
 var content = fs.readFileSync( file, 'utf8' );
-var json = JSON.parse( content );
+
+// use parser wrapper for improved error messages
+var json = null;
+try {
+	json = Tools.parseJSON( content );
+}
+catch (err) {
+	die("ERROR: Failed to parse JSON file: " + file + ": " + (err.message || err) + "\n");
+}
 
 var compact = args.compact || false;
 var indent = args.indent || "\t";

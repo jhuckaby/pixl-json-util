@@ -1,3 +1,30 @@
+<details><summary>Table of Contents</summary>
+
+<!-- toc -->
+- [Overview](#overview)
+- [Usage](#usage)
+	* [Commands](#commands)
+		+ [set](#set)
+		+ [add](#add)
+		+ [replace](#replace)
+		+ [delete](#delete)
+		+ [get](#get)
+		+ [validate](#validate)
+		+ [echo](#echo)
+	* [Arguments](#arguments)
+		+ [--type](#--type)
+		+ [--indent](#--indent)
+		+ [--compact](#--compact)
+		+ [--atomic](#--atomic)
+		+ [--quiet](#--quiet)
+		+ [--dryrun](#--dryrun)
+		+ [--help](#--help)
+	* [Adding Complex JSON](#adding-complex-json)
+	* [Traversing Arrays](#traversing-arrays)
+- [License](#license)
+
+</details>
+
 # Overview
 
 **pixl-json-util** is a simple command-line utility for manipulating JSON files.  It allows you to get, add, replace or delete any value anywhere in the JSON file, and save it back to disk.  You can traverse nested objects and arrays with dot or slash notation, to target a specific property deep in the tree.
@@ -219,7 +246,7 @@ jsu package.json set keywords/1 "utility"
 
 **The MIT License (MIT)**
 
-*Copyright (c) 2018 Joseph Huckaby.*
+*Copyright (c) 2018 - 2022 Joseph Huckaby.*
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
