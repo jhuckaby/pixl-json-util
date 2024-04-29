@@ -33,19 +33,19 @@
 
 Use [npm](https://www.npmjs.com/) to install the module:
 
-```
+```sh
 sudo npm install -g pixl-json-util
 ```
 
 This should add a `jsu` command to your PATH, which you can use thusly:
 
-```
+```sh
 jsu FILE COMMAND [PATH] [VALUE] [--ARGS]
 ```
 
 `FILE` is the JSON file to load/save, `COMMAND` is the command to run (see below), `PATH` is the key name or path (dot notation or slash notation), and `VALUE` is the new value, if you are adding or replacing.  `--ARGS` are optional, and described below.  Example:
 
-```
+```sh
 jsu package.json set dependencies/async "2.6.0"
 ```
 
@@ -59,7 +59,7 @@ This would write an `async` key into the `dependencies` object, and set the valu
 
 You can also use [dot notation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors) for accessing nested keys, like this:
 
-```
+```sh
 jsu package.json set dependencies.async "2.6.0"
 ```
 
@@ -75,7 +75,7 @@ Here are the available commands, and how to use them:
 
 The `set` command will add or replace a key, and doesn't care if it exists or not.  It will also automatically create any parent objects if necessary.  Example:
 
-```
+```sh
 jsu package.json set dependencies/async "2.6.0"
 ```
 
@@ -83,7 +83,7 @@ jsu package.json set dependencies/async "2.6.0"
 
 The `add` command will add a new key, and will fail if the key already exists.  It will also automatically create any parent objects if necessary.  Example:
 
-```
+```sh
 jsu package.json add scripts/test "mocha test.js"
 ```
 
@@ -93,7 +93,7 @@ The data type of the new value is guessed by the format.  Meaning, if it appears
 
 The `replace` command will replace an existing key with a new value, and fail if the key or any parent objects don't exist.  Example:
 
-```
+```sh
 jsu package.json replace repository/type "git"
 ```
 
@@ -101,7 +101,7 @@ jsu package.json replace repository/type "git"
 
 The `delete` command will delete an existing key, and fail if the key or any parent objects don't exist.  Example:
 
-```
+```sh
 jsu package.json delete bugs/url
 ```
 
@@ -109,13 +109,13 @@ jsu package.json delete bugs/url
 
 The `get` command simply fetches an existing value, and outputs it to the console.  It does not save over the file.  Example:
 
-```
+```sh
 jsu package.json get version
 ```
 
 If you target an object instead of a plain value, the object and all its contents are pretty-printed and outputted:
 
-```
+```sh
 jsu package.json get repository
 ```
 
@@ -132,7 +132,7 @@ Example output:
 
 The `validate` command simply validates the syntax of the JSON file, and exits without saving.  The exit code will be `0` upon success (valid), or non-zero if an error occurred parsing the file.  Details will be available in the STDERR output.  Example:
 
-```
+```sh
 jsu package.json validate
 ```
 
@@ -140,8 +140,16 @@ jsu package.json validate
 
 The `echo` command simply echoes the entire file to the console, without saving any changes.  This command is also the default action if no command is specified.  This can be used to quickly pretty-print a compact JSON file.  Example:
 
-```
+```sh
 jsu some_compact_file.json
+```
+
+### pretty
+
+The `pretty` command will pretty-print the file, and save it back to disk, replacing the original file.  Example:
+
+```sh
+jsu some_compact_file.json pretty
 ```
 
 ## Arguments
@@ -162,7 +170,7 @@ The `--type` argument allows you to specify the exact data format of the new val
 
 Example use:
 
-```
+```sh
 jsu user.json add status/enabled false --type boolean
 ```
 
@@ -180,7 +188,7 @@ Note that specifying the data type should only be required in special situations
 
 By default all JSON files are saved back out to disk using pretty-printing, and a single tab (`\t`) character as the indent.  To change this, you can add a `--indent` argument, followed by any number of spaces or tabs you want.  Example (2 spaces):
 
-```
+```sh
 jsu package.json set version "2.0.0" --indent "  "
 ```
 
@@ -188,7 +196,7 @@ jsu package.json set version "2.0.0" --indent "  "
 
 If you would prefer your JSON file be compacted and printed onto one line, add the `--compact` argument.  Example:
 
-```
+```sh
 jsu package.json set license "MIT" --compact
 ```
 
@@ -196,7 +204,7 @@ jsu package.json set license "MIT" --compact
 
 The `--atomic` argument causes the file save operation to be "atomic".  Meaning, the JSON is first written to a temporary file in the same directory, then renamed over the original file.  The temporary file is named by appending the current PID, followed by a `.tmp` file extension.  Example:
 
-```
+```sh
 jsu package.json set name "pixl-json-util" --atomic
 ```
 
@@ -204,7 +212,7 @@ jsu package.json set name "pixl-json-util" --atomic
 
 The `--quiet` argument silences all output from the script, unless an error occurs.  Example:
 
-```
+```sh
 jsu package.json add devDependencies/mocha "5.2.0" --quiet
 ```
 
@@ -212,7 +220,7 @@ jsu package.json add devDependencies/mocha "5.2.0" --quiet
 
 The `--dryrun` argument doesn't actually save any changes to disk, and instead simply outputs the final JSON file to the console.  This is great for examining a change before you make it on the real file.  Example:
 
-```
+```sh
 jsu package.json delete devDependencies --dryrun
 ```
 
@@ -220,7 +228,7 @@ jsu package.json delete devDependencies --dryrun
 
 The `--help` argument prints out this README to the console and exits, without taking any other action.  Example:
 
-```
+```sh
 jsu --help
 ```
 
@@ -228,7 +236,7 @@ jsu --help
 
 You can actually add entire JSON fragments to your file.  Just make sure you are replacing an existing object, or you specify `--type object` so the engine knows to parse your value as JSON when applying to the document.  Example:
 
-```
+```sh
 jsu package.json set dependencies "{\"pixl-cli\":\"^1.0.0\"}" --type object
 ```
 
@@ -238,7 +246,7 @@ Make sure you properly escape your quotes, when attempting this.
 
 You can traverse arrays just like any other object, simply by specifying the array index as the key.  Example:
 
-```
+```sh
 jsu package.json set keywords/1 "utility"
 ```
 
@@ -246,7 +254,7 @@ jsu package.json set keywords/1 "utility"
 
 **The MIT License (MIT)**
 
-*Copyright (c) 2018 - 2022 Joseph Huckaby.*
+*Copyright (c) 2018 - 2024 Joseph Huckaby.*
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

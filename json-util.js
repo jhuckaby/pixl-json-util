@@ -32,7 +32,7 @@ var file = other.shift();
 if (!file) die(usage);
 
 var cmd = other.shift() || 'echo';
-if (!cmd || !cmd.match(/^(set|add|replace|delete|get|validate|echo)$/)) die(usage);
+if (!cmd || !cmd.match(/^(set|add|replace|delete|get|validate|echo|pretty)$/)) die(usage);
 
 var content = fs.readFileSync( file, 'utf8' );
 
@@ -56,6 +56,13 @@ if (cmd == 'validate') {
 else if (cmd == 'echo') {
 	var payload = (compact ? JSON.stringify(json) : JSON.stringify( json, null, indent )) + "\n";
 	print(payload); 
+	process.exit(0);
+}
+else if (cmd == 'pretty') {
+	var payload = (compact ? JSON.stringify(json) : JSON.stringify( json, null, indent )) + "\n";
+	if (args.dryrun || args.debug) { print(payload); process.exit(0); }
+	fs.writeFileSync( file, payload );
+	print("File saved: " + file + "\n");
 	process.exit(0);
 }
 
